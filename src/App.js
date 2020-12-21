@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import ContactForm from "./components/ContactForm";
 import ContactList from "./components/ContactList";
 
-// import logo from './logo.svg';
 import "./App.css";
 
 class App extends Component {
@@ -12,23 +11,15 @@ class App extends Component {
   };
 
   addContact = (newContact) =>
-    this.setState((contacts) => ({ contacts: [...contacts, newContact] }));
+    this.setState((prevState) => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
 
-  handleDeleteContact = (id) =>
-    this.setState((contacts) => {
-      contacts: contacts.filter((contact) => contact.id !== id);
-    });
-  // addTodo = (text) => {
-  //   const todo = {
-  //     // id: shortid.generate(),
-  //     name: text,
-  //   };
-
-  // this.setState((prevState) => ({
-  //   contacts: [todo, ...prevState.name],
-  // }));
-  // };
-
+  handleDeleteContact = (id) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter((contact) => contact.id !== id),
+    }));
+  };
   render() {
     const { contacts } = this.state;
 
@@ -38,7 +29,10 @@ class App extends Component {
         <ContactForm onAdd={this.addContact} />
 
         <h2>Contacts</h2>
-        <ContactList contacts={contacts} onDelete={this.handleDeleteContact} />
+        <ContactList
+          contacts={this.state.contacts}
+          onDelete={this.handleDeleteContact}
+        />
       </>
     );
   }

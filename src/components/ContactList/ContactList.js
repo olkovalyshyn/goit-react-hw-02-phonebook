@@ -2,7 +2,7 @@
 
 const ContactListTpl = ({ id, name, number, onDelete }) => {
   return (
-    <li>
+    <li key={id}>
       {name}: {number} <button onClick={() => onDelete(id)}></button>
     </li>
   );
@@ -13,7 +13,7 @@ const ContactList = ({ contacts, onDelete }) => {
 
   <ul>
     {contacts.map((contact) => {
-      <ContactListTpl {...contact} onDelete={onDelete} />;
+      return <ContactListTpl {...contact} onDelete={onDelete} />;
     })}
   </ul>;
 };
