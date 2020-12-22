@@ -1,21 +1,14 @@
-// import React, { Component } from "react";
-
-const ContactListTpl = ({ id, name, number, onDelete }) => {
+function ContactList({ contacts, onDeleteContact }) {
   return (
-    <li key={id}>
-      {name}: {number} <button onClick={() => onDelete(id)}></button>
-    </li>
+    <ul>
+      {contacts.map(({ id, name, number }) => (
+        <li key={id}>
+          {name}: {number}
+          <button type="button">Delete</button>
+        </li>
+      ))}
+    </ul>
   );
-};
-
-const ContactList = ({ contacts, onDelete }) => {
-  if (contacts.length === 0) return null;
-
-  <ul>
-    {contacts.map((contact) => {
-      return <ContactListTpl {...contact} onDelete={onDelete} />;
-    })}
-  </ul>;
-};
+}
 
 export default ContactList;

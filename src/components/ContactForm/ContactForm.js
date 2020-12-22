@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import shortid from "shortid";
 
 import s from "./ContactForm.module.css";
 
@@ -10,26 +9,16 @@ class ContactForm extends Component {
   };
 
   handleChange = (event) => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
+    this.setState({ [event.currentTarget.name]: event.currentTarget.value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { name, number } = this.state;
-    const { onAdd } = this.props;
-
-    onAdd({ id: shortid.generate(), name, number });
-
-    // console.log(this.state);
-
-    // this.props.onSubmit(this.state.name);
-
-    // this.setState({ name: "" });
+    this.setState({ name: "", number: "" });
+    this.props.onAdd(this.state.name, this.state.number);
   };
 
   render() {
-    const { name, number } = this.state;
     return (
       <form className={s.form} onSubmit={this.handleSubmit}>
         <label className={s.label}>
@@ -38,7 +27,7 @@ class ContactForm extends Component {
             type="text"
             name="name"
             className={s.input}
-            value={name}
+            value={this.state.name}
             onChange={this.handleChange}
           ></input>
         </label>
@@ -49,7 +38,7 @@ class ContactForm extends Component {
             type="tel"
             name="number"
             className={s.input}
-            value={number}
+            value={this.state.number}
             onChange={this.handleChange}
           ></input>
         </label>
