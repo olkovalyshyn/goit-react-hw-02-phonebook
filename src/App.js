@@ -26,8 +26,20 @@ class App extends Component {
       number: number,
     };
 
+    this.state.contacts.find(
+      ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
+    )
+      ? alert(`${name} is already in contacts.`)
+      : this.setState((prevState) => ({
+          contacts: [contact, ...prevState.contacts],
+        }));
+  };
+
+  deleteContact = (idForDelete) => {
     this.setState((prevState) => ({
-      contacts: [contact, ...prevState.contacts],
+      contacts: prevState.contacts.filter(
+        (contact) => contact.id !== idForDelete
+      ),
     }));
   };
 
@@ -52,7 +64,10 @@ class App extends Component {
         <Filter value={this.state.filter} onChange={this.changeFilter} />
 
         <h2>Contacts</h2>
-        <ContactList contacts={this.visibleContacts()} />
+        <ContactList
+          contacts={this.visibleContacts()}
+          onDeleteContact={this.deleteContact}
+        />
       </>
     );
   }
